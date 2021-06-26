@@ -1,4 +1,7 @@
 <template>
+  <base-dialog :show="!!error" title="An error occured!" @close="handleError">
+    <p>{{ error }}</p>
+  </base-dialog>
   <section>
     <base-card>
       <h2>Register as a Coach</h2>
@@ -14,10 +17,22 @@ export default {
   components: {
     CoachForm,
   },
+  data() {
+    return {
+      error: null,
+    };
+  },
   methods: {
-    saveData(data) {
-      this.$store.dispatch('coaches/registerCoach', data);
-      this.$router.replace('/coaches');
+    handleError() {
+      this.error = null;
+    },
+    async saveData(data) {
+      try {
+        await this.$store.dispatch('coaches/registerCoach', data);
+        this.$router.replace('/coaches');
+      } catch (error) {
+        this.error = error.message || 'Something went wrong!';
+      }
     },
   },
 };
