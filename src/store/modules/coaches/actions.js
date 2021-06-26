@@ -1,14 +1,14 @@
 export default {
   registerCoach(context, data) {
-    const newCoach = {
+    const coachData = {
       id: context.rootGetters.userId,
       firstName: data.first,
       lastName: data.last,
       description: data.desc,
-      hourlyrate: data.rate,
+      hourlyRate: data.rate,
       areas: data.areas
     };
 
-    context.commit('registerCoach', newCoach);
+    context.commit('registerCoach', coachData);
   }
 };
