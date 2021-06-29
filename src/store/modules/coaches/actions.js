@@ -1,9 +1,7 @@
 export default {
   async registerCoach(context, data) {
     const userId = context.rootGetters.userId;
-
     const coachData = {
-      id: context.rootGetters.userId,
       firstName: data.first,
       lastName: data.last,
       description: data.desc,
@@ -11,20 +9,21 @@ export default {
       areas: data.areas
     };
 
+    const token = context.rootGetters.token;
+
     const response = await fetch(
-      `https://vue-coach-finder-93651-default-rtdb.europe-west1.firebasedatabase.app/coaches/${userId}.json`,
+      `https://vue-coach-finder-93651-default-rtdb.europe-west1.firebasedatabase.app/coaches/${userId}.json?auth=` +
+        token,
       {
         method: 'PUT',
         body: JSON.stringify(coachData)
       }
     );
 
-    const responseData = await response.json();
+    // const responseData = await response.json();
+
     if (!response.ok) {
-      const error = new Error(
-        responseData.message || 'Failed to register as a coach!'
-      );
-      throw error;
+      // error ...
     }
 
     context.commit('registerCoach', {
@@ -36,11 +35,12 @@ export default {
     if (!payload.forceRefresh && !context.getters.shouldUpdate) {
       return;
     }
+
     const response = await fetch(
       `https://vue-coach-finder-93651-default-rtdb.europe-west1.firebasedatabase.app/coaches.json`
     );
-
     const responseData = await response.json();
+
     if (!response.ok) {
       const error = new Error(responseData.message || 'Failed to fetch!');
       throw error;

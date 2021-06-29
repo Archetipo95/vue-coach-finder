@@ -12,21 +12,21 @@ export default {
   props: {
     mode: {
       type: String,
-      require: false,
-      default: null,
+      required: false,
+      default: null
     },
     link: {
       type: Boolean,
-      require: false,
-      default: false,
+      required: false,
+      default: false
     },
     to: {
       type: String,
-      require: false,
-      default: '/',
-    },
-  },
-};
+      required: false,
+      default: '/'
+    }
+  }
+}
 </script>
 
 <style scoped>
